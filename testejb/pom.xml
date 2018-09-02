@@ -19,11 +19,25 @@
             <version>6.0</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>org.jboss.logging</groupId>
             <artifactId>jboss-logging</artifactId>
             <version>3.3.0.Final</version>
             <scope>provided</scope>
+        </dependency>
+
+        <!--DB-->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>4.3.5.Final</version>
         </dependency>
     </dependencies>
 
@@ -56,6 +70,75 @@
                 <groupId>org.wildfly.plugins</groupId>
                 <artifactId>wildfly-maven-plugin</artifactId>
                 <version>1.2.2.Final</version>
+                <executions>
+                    <execution>
+                        <id>deploy-postgresql</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>deploy-artifact</goal>
+                        </goals>
+                        <configuration>
+                            <groupId>org.postgresql</groupId>
+                            <artifactId>postgresql</artifactId>
+                            <name>postgresql.jar</name>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>add-datasource</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>add-resource</goal>
+                        </goals>
+                        <configuration>
+                            <address>subsystem=datasources</address>
+                            <resources>
+                                <resource>
+                                    <address>xa-data-source=java:jboss/datasources/postgresDS</address>
+                                    <properties>
+                                        <xa-datasource-class>org.postgresql.xa.PGXADataSource</xa-datasource-class>
+                                        <jndi-name>java:jboss/datasources/postgresDS</jndi-name>
+                                        <enabled>true</enabled>
+                                        <driver-name>postgresql.jar</driver-name>
+                                    </properties>
+                                    <resources>
+                                        <resource>
+                                            <address>
+                                                xa-datasource-properties=DatabaseName
+                                            </address>
+                                            <properties>
+                                                <value>example</value>
+                                            </properties>
+                                        </resource>
+                                        <resource>
+                                            <address>
+                                                xa-datasource-properties=ServerName
+                                            </address>
+                                            <properties>
+                                                <value>localhost</value>
+                                            </properties>
+                                        </resource>
+                                        <resource>
+                                            <address>
+                                                xa-datasource-properties=User
+                                            </address>
+                                            <properties>
+                                                <value>postgres</value>
+                                            </properties>
+                                        </resource>
+                                        <resource>
+                                            <address>
+                                                xa-datasource-properties=Password
+                                            </address>
+                                            <properties>
+                                                <value>postgres</value>
+                                            </properties>
+                                        </resource>
+                                    </resources>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
