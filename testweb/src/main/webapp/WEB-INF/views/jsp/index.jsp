@@ -106,14 +106,18 @@
 </head>
 
 <body>
-<%--<form class="form b" method="post" action="">
-    <label for="name">Name</label>
-    <input type="text" id="name" name="name">
-    <input type="submit" class="submit" value="Submit">
-</form>--%>
 <spring:url value="/users/add" var="userActionUrl"/>
-<form:form method="post" modelAttribute="userForm" action="${userActionUrl}">
-    <form:input path="name" type="text"/>
+
+<form:form cssClass="form b" method="post" modelAttribute="userForm" action="${userActionUrl}">
+<label for="number">Number</label>
+<form:input path="number" type="text"/><p>
+
+    <label for="description">Description</label>
+<form:input path="description" type="text"/><p>
+
+    <label for="amount">Amount</label>
+<form:input path="amount" type="number"/><p>
+
     <form:button>Add</form:button>
 </form:form>
 </body>
