@@ -2,7 +2,9 @@ package com.svichkarev.anatoly.controller;
 
 import com.svichkarev.anatoly.Hello;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,7 +19,13 @@ import java.util.Properties;
 public class HelloController {
 
     @RequestMapping
-    public String index() {
+    public String index(Model model) {
+        model.addAttribute("userForm", new Order());
+        return "index";
+    }
+
+    @RequestMapping(value = "/users/add", method = RequestMethod.POST)
+    public String showAddUserForm(@ModelAttribute("userForm") Order order) {
         return "index";
     }
 

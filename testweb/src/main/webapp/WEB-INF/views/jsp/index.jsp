@@ -1,3 +1,6 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -20,21 +23,10 @@
                 rules: {
                     name: {
                         required: true
-                    },
-                    email: {
-                        required: true,
-                        email: true
-                    },
-                    comments: {
-                        required: true,
-                        minlength: 5,
-                        nourl: true
                     }
                 },
                 messages: {
-                    name: "Required Field",
-                    email: "Valid Email Required",
-                    comments: "Required Field + No URL's"
+                    name: "Required Field"
                 }
             });
         });
@@ -114,14 +106,15 @@
 </head>
 
 <body>
-<form class="form b" method="post" action="">
+<%--<form class="form b" method="post" action="">
     <label for="name">Name</label>
     <input type="text" id="name" name="name">
-    <label for="email">Email</label>
-    <input type="text" id="email" name="email">
-    <label for="comments">Comments</label>
-    <textarea id="comments" name="comments" rows="3" cols="35"></textarea>
     <input type="submit" class="submit" value="Submit">
-</form>
+</form>--%>
+<spring:url value="/users/add" var="userActionUrl"/>
+<form:form method="post" modelAttribute="userForm" action="${userActionUrl}">
+    <form:input path="name" type="text"/>
+    <form:button>Add</form:button>
+</form:form>
 </body>
 </html>
