@@ -16,16 +16,21 @@ import java.util.Properties;
 @Controller
 public class HelloController {
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping
+    public String index() {
+        return "index";
+    }
+
+    @RequestMapping(value = "/he", method = RequestMethod.GET)
     public String printWelcome(ModelMap model) throws NamingException {
         model.addAttribute("name", getEjbHello());
-        return "hello";
+        return "index";
     }
 
     @RequestMapping(value = "/hello/{name:.+}", method = RequestMethod.GET)
     public ModelAndView hello(@PathVariable("name") String name) {
         ModelAndView model = new ModelAndView();
-        model.setViewName("hello");
+        model.setViewName("index");
         model.addObject("name", name);
 
         return model;
