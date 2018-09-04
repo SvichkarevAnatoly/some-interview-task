@@ -5,6 +5,12 @@ public class Order {
     private String number;
     private String description;
     private int amount;
+    private Currency currency;
+
+    public enum Currency {
+        EUR,
+        USD
+    }
 
     public String getNumber() {
         return number;
@@ -28,5 +34,13 @@ public class Order {
 
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
     }
 }

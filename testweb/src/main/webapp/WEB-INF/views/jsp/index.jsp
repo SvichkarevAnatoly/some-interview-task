@@ -109,16 +109,22 @@
 <spring:url value="/users/add" var="userActionUrl"/>
 
 <form:form cssClass="form b" method="post" modelAttribute="userForm" action="${userActionUrl}">
-<label for="number">Number</label>
-<form:input path="number" type="text"/><p>
+    <label for="number">Number</label>
+    <form:input path="number" type="text"/><p>
 
     <label for="description">Description</label>
-<form:input path="description" type="text"/><p>
+    <form:input path="description" type="text"/><p>
 
     <label for="amount">Amount</label>
-<form:input path="amount" type="number"/><p>
+    <form:input path="amount" type="number"/><p>
 
-    <form:button>Add</form:button>
+    <label for="currency">Currency</label>
+    <select id = "currency" name = "currency">
+        <option value = "USD">USD</option>
+        <option value = "EUR">EUR</option>
+    </select><p>
+
+    <form:button>submit</form:button>
 </form:form>
 </body>
 </html>
