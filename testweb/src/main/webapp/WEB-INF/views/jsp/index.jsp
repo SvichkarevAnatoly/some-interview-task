@@ -11,22 +11,34 @@
     <script type="text/javascript" src="http://www.websitecodetutorials.com/code/jquery-plugins/validation.js"></script>
 
     <script type="text/javascript">
-        /* Fire Valaidate */
         $(document).ready(function () {
-            $.validator.addMethod("nourl",
+            $.validator.addMethod("alphanumeric",
                 function (value, element) {
-                    return !/http\:\/\/|www\.|link\=|url\=/.test(value);
-                },
-                "No URL's"
+                    return /^[^\W_]+$/i.test(value);
+                }
             );
             $(".form.b").validate({
                 rules: {
-                    name: {
-                        required: true
+                    number: {
+                        required: true,
+                        alphanumeric: true
+                    },
+                    amount: {
+                        required: true,
+                        min: 0.01,
+                        maxlength: 5
                     }
                 },
                 messages: {
-                    name: "Required Field"
+                    number: {
+                        required: "Required Field",
+                        alphanumeric: "Only digits or letters"
+                    },
+                    amount: {
+                        required: "Required Field",
+                        min: "Require positive number",
+                        maxlength: "Max 5 digits"
+                    }
                 }
             });
         });
@@ -116,7 +128,8 @@
     <form:input path="description" type="text"/><p>
 
     <label for="amount">Amount</label>
-    <form:input path="amount" type="number"/><p>
+<form:input path="amount" type="number" step=".01"/>
+<p>
 
     <label for="currency">Currency</label>
     <select id = "currency" name = "currency">

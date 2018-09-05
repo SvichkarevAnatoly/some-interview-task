@@ -4,7 +4,7 @@ public class Order {
 
     private String number;
     private String description;
-    private int amount;
+    private double amount;
     private Currency currency;
 
     public enum Currency {
@@ -28,11 +28,11 @@ public class Order {
         this.description = description;
     }
 
-    public int getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
