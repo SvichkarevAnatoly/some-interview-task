@@ -1,7 +1,9 @@
 package com.svichkarev.anatoly.controller;
 
+import com.svichkarev.anatoly.CurrencyConverter;
 import com.svichkarev.anatoly.ejb.EOrder;
 import com.svichkarev.anatoly.ejb.OrderService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -14,12 +16,17 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import java.util.Properties;
 
-import static com.svichkarev.anatoly.ejb.EOrder.Currency.USD;
+import static com.svichkarev.anatoly.ejb.Currency.USD;
 
 @Controller
 public class OrderController {
 
+    private static final int MAX_USD_AMOUNT = 5000;
+
     private OrderService orderService;
+
+    @Autowired
+    private CurrencyConverter converter;
 
     @PostConstruct
     public void init() throws NamingException {
@@ -45,8 +52,8 @@ public class OrderController {
 
     @RequestMapping(value = "/orders/add", method = RequestMethod.POST)
     public String addOrder(@ModelAttribute("orderForm") EOrder order, Model model) {
-        if (order.getAmount() > 5000) {
-            model.addAttribute("amountError", "Amount is more than 5000 USD");
+        if (converter.convert(order.getAmount(), order.getCurrency(), USD) > MAX_USD_AMOUNT) {
+            model.addAttribute("amountError", "Required amount is less than 5000 USD");
         } else {
             orderService.addOrder(order);
         }

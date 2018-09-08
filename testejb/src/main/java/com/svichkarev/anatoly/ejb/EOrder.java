@@ -11,11 +11,6 @@ public class EOrder implements Serializable {
     protected double amount;
     protected Currency currency;
 
-    public enum Currency {
-        EUR,
-        USD
-    }
-
     public EOrder() {
     }
 
