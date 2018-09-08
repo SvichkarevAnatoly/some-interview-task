@@ -118,9 +118,9 @@
 </head>
 
 <body>
-<spring:url value="/users/add" var="userActionUrl"/>
+<spring:url value="/orders/add" var="addOrder"/>
 
-<form:form cssClass="form b" method="post" modelAttribute="userForm" action="${userActionUrl}">
+<form:form cssClass="form b" method="post" modelAttribute="orderForm" action="${addOrder}">
     <label for="number">Number</label>
     <form:input path="number" type="text"/><p>
 

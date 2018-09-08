@@ -5,10 +5,8 @@ import com.svichkarev.anatoly.ejb.OrderService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -32,25 +30,16 @@ public class OrderController {
     @RequestMapping
     public String showNewOrderForm(Model model) {
         final EOrder defaultOrder = new EOrder("number", "description", 5, USD);
-        model.addAttribute("userForm", defaultOrder);
+        model.addAttribute("orderForm", defaultOrder);
         return "index";
     }
 
-    @RequestMapping(value = "/users/add", method = RequestMethod.POST)
-    public String addOrder(@ModelAttribute("userForm") EOrder order) {
+    @RequestMapping(value = "/orders/add", method = RequestMethod.POST)
+    public String addOrder(@ModelAttribute("orderForm") EOrder order) {
         // TODO: validate amount
         getOrderService().addOrder(order);
 
         return "index";
-    }
-
-    @RequestMapping(value = "/hello/{name:.+}", method = RequestMethod.GET)
-    public ModelAndView hello(@PathVariable("name") String name) {
-        ModelAndView model = new ModelAndView();
-        model.setViewName("index");
-        model.addObject("name", name);
-
-        return model;
     }
 
     private OrderService getOrderService() {

@@ -9,7 +9,7 @@ import static com.svichkarev.anatoly.db.EOrder.toDbEntity;
 @Stateless
 public class OrderServiceBean implements OrderService {
 
-    @PersistenceContext(unitName = "examplePU")
+    @PersistenceContext(unitName = "orderPU")
     private EntityManager entityManager;
 
     @Override
