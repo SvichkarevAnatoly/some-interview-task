@@ -55,4 +55,14 @@ public class EOrder implements Serializable {
     public void setCurrency(Currency currency) {
         this.currency = currency;
     }
+
+    @Override
+    public String toString() {
+        return "EOrder{" +
+                "number='" + number + '\'' +
+                ", description='" + description + '\'' +
+                ", amount=" + amount +
+                ", currency=" + currency +
+                '}';
+    }
 }
