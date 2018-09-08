@@ -1,4 +1,4 @@
-package com.svichkarev.anatoly.controller;
+package com.svichkarev.anatoly;
 
 public class Order {
 
@@ -10,6 +10,16 @@ public class Order {
     public enum Currency {
         EUR,
         USD
+    }
+
+    public Order() {
+    }
+
+    public Order(String number, String description, double amount, Currency currency) {
+        this.number = number;
+        this.description = description;
+        this.amount = amount;
+        this.currency = currency;
     }
 
     public String getNumber() {
