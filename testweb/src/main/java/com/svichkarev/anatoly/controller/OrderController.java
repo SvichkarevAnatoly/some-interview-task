@@ -34,6 +34,12 @@ public class OrderController {
         return "index";
     }
 
+    @RequestMapping(value = "/orders")
+    public String getOrders(Model model) {
+        model.addAttribute("orders", getOrderService().getOrders());
+        return "list";
+    }
+
     @RequestMapping(value = "/orders/add", method = RequestMethod.POST)
     public String addOrder(@ModelAttribute("orderForm") EOrder order) {
         // TODO: validate amount
