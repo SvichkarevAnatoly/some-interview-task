@@ -128,7 +128,8 @@
     <form:input path="description" type="text"/><p>
 
     <label for="amount">Amount</label>
-<form:input path="amount" type="number" step=".01"/>
+    <form:input path="amount" type="number" step=".01"/>
+    <label class="label error">${amountError}</label>
 <p>
 
     <label for="currency">Currency</label>

@@ -44,9 +44,12 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/orders/add", method = RequestMethod.POST)
-    public String addOrder(@ModelAttribute("orderForm") EOrder order) {
-        // TODO: validate amount
-        orderService.addOrder(order);
+    public String addOrder(@ModelAttribute("orderForm") EOrder order, Model model) {
+        if (order.getAmount() > 5000) {
+            model.addAttribute("amountError", "Amount is more than 5000 USD");
+        } else {
+            orderService.addOrder(order);
+        }
 
         return "index";
     }
