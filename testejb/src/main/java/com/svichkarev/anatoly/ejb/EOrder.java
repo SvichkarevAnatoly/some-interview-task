@@ -1,13 +1,15 @@
 package com.svichkarev.anatoly.ejb;
 
+import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 
+@MappedSuperclass
 public class EOrder implements Serializable {
 
-    private String number;
-    private String description;
-    private double amount;
-    private Currency currency;
+    protected String number;
+    protected String description;
+    protected double amount;
+    protected Currency currency;
 
     public enum Currency {
         EUR,
