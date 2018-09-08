@@ -1,4 +1,4 @@
-package com.svichkarev.anatoly;
+package com.svichkarev.anatoly.db;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

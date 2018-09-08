@@ -1,7 +1,7 @@
 package com.svichkarev.anatoly.controller;
 
-import com.svichkarev.anatoly.EOrder;
-import com.svichkarev.anatoly.OrderService;
+import com.svichkarev.anatoly.ejb.EOrder;
+import com.svichkarev.anatoly.ejb.OrderService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,7 +15,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import java.util.Properties;
 
-import static com.svichkarev.anatoly.EOrder.Currency.USD;
+import static com.svichkarev.anatoly.ejb.EOrder.Currency.USD;
 
 @Controller
 public class OrderController {
@@ -55,7 +55,7 @@ public class OrderController {
 
     private OrderService getOrderService() {
         try {
-            return (OrderService) context.lookup("ejb:/testejb//OrderServiceBean!com.svichkarev.anatoly.OrderService");
+            return (OrderService) context.lookup("ejb:/testejb//OrderServiceBean!com.svichkarev.anatoly.ejb.OrderService");
         } catch (NamingException e) {
             e.printStackTrace();
             // TODO: decide what to do

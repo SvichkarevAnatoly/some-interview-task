@@ -1,4 +1,4 @@
-package com.svichkarev.anatoly;
+package com.svichkarev.anatoly.ejb;
 
 import java.io.Serializable;
 
