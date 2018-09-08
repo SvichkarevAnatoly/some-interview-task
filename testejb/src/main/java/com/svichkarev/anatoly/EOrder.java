@@ -1,6 +1,8 @@
 package com.svichkarev.anatoly;
 
-public class Order {
+import java.io.Serializable;
+
+public class EOrder implements Serializable {
 
     private String number;
     private String description;
@@ -12,10 +14,10 @@ public class Order {
         USD
     }
 
-    public Order() {
+    public EOrder() {
     }
 
-    public Order(String number, String description, double amount, Currency currency) {
+    public EOrder(String number, String description, double amount, Currency currency) {
         this.number = number;
         this.description = description;
         this.amount = amount;

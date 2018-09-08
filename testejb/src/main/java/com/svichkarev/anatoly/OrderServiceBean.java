@@ -5,18 +5,19 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 @Stateless
-public class HelloBean implements Hello {
+public class OrderServiceBean implements OrderService {
 
     @PersistenceContext(unitName = "examplePU")
     private EntityManager entityManager;
 
     @Override
-    public String sayHello() {
-        UserEntity userEntity = entityManager.find(UserEntity.class, "1");
+    public void addOrder(EOrder order) {
+        System.out.println("CALL addOrder");
+        /*UserEntity userEntity = entityManager.find(UserEntity.class, "1");
         if (userEntity == null) {
             entityManager.persist(new UserEntity("1", "Anatoly"));
-        }
+        }*/
 
-        return "Hello world from ejb";
+        // return "Hello world from ejb";
     }
 }

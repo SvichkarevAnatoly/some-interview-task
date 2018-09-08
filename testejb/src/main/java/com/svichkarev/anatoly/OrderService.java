@@ -3,7 +3,7 @@ package com.svichkarev.anatoly;
 import javax.ejb.Remote;
 
 @Remote
-public interface Hello {
+public interface OrderService {
 
-    public String sayHello();
+    void addOrder(EOrder order);
 }
