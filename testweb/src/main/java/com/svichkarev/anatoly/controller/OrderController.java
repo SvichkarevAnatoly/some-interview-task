@@ -1,6 +1,7 @@
 package com.svichkarev.anatoly.controller;
 
 import com.svichkarev.anatoly.CurrencyConverter;
+import com.svichkarev.anatoly.ejb.Currency;
 import com.svichkarev.anatoly.ejb.EOrder;
 import com.svichkarev.anatoly.ejb.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,11 @@ public class OrderController {
 
     @Autowired
     private CurrencyConverter converter;
+
+    @ModelAttribute("currencies")
+    public Currency[] populateCurrencies() {
+        return Currency.values();
+    }
 
     @PostConstruct
     public void init() throws NamingException {

@@ -132,10 +132,9 @@
     <label class="label error">${amountError}</label><p>
 
     <label for="currency">Currency</label>
-    <select id = "currency" name = "currency">
-        <option value = "USD">USD</option>
-        <option value = "EUR">EUR</option>
-    </select><p>
+    <form:select path="currency">
+        <form:options items="${currencies}"/>
+    </form:select><p>
 
     <form:button>submit</form:button>
 </form:form>
