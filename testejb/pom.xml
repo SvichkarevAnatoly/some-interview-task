@@ -70,6 +70,7 @@
                 <groupId>org.wildfly.plugins</groupId>
                 <artifactId>wildfly-maven-plugin</artifactId>
                 <version>1.2.2.Final</version>
+                <!--todo: create queues-->
                 <executions>
                     <execution>
                         <id>deploy-postgresql</id>

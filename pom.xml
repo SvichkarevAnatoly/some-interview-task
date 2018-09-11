@@ -13,6 +13,7 @@
     <modules>
         <module>testejb</module>
         <module>testweb</module>
+        <module>processorejb</module>
     </modules>
 
     <name>best2pay-test Maven Webapp</name>
