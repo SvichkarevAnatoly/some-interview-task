@@ -48,51 +48,23 @@ public class OrderServiceBean implements OrderService {
 
     private void runSavingProcess(EOrder order) {
         long orderId = 0;
-        try {
-            QueueConnection connection = (QueueConnection) factory.createConnection();
+        try (QueueConnection connection = (QueueConnection) factory.createConnection();
+             QueueSession session = connection.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
+             MessageProducer producer = session.createProducer(requestQueue)) {
+
             connection.start();
+            ObjectMessage message = session.createObjectMessage(order);
+            producer.send(message);
 
-            try {
-                QueueSession session = connection.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
-                try {
-                    MessageProducer producer = session.createProducer(requestQueue);
-                    ObjectMessage message = send(order, session, producer);
-
-                    if (message != null) {
-                        orderId = syncReceive(session, message.getJMSMessageID());
-                    }
-                } finally {
-                    session.close();
-                }
-            } finally {
-                connection.close();
+            final String responseSelector = String.format("JMSCorrelationID='%s'", message.getJMSMessageID());
+            try (QueueReceiver receiver = session.createReceiver(responseQueue, responseSelector)) {
+                Message response = receiver.receive();
+                orderId = Long.valueOf(((TextMessage) response).getText());
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (JMSException e) {
+            e.printStackTrace();
         }
 
         System.out.println("Successfully save order " + order + " with id " + orderId);
-    }
-
-    private long syncReceive(QueueSession session, String correlationId) throws JMSException {
-        final String responseSelector = String.format("JMSCorrelationID='%s'", correlationId);
-        QueueReceiver receiver = session.createReceiver(responseQueue, responseSelector);
-        Message response = receiver.receive();
-
-        long orderId = Long.valueOf(((TextMessage) response).getText());
-        receiver.close();
-
-        return orderId;
-    }
-
-    private ObjectMessage send(EOrder order, QueueSession session, MessageProducer producer) throws JMSException {
-        ObjectMessage message;
-        try {
-            message = session.createObjectMessage(order);
-            producer.send(message);
-        } finally {
-            producer.close();
-        }
-        return message;
     }
 }
