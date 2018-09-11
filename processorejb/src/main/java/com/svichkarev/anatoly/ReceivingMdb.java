@@ -29,7 +29,10 @@ public class ReceivingMdb implements MessageListener {
         EOrder order = getOrder(message);
         System.out.println("onMessage(" + order + ")");
 
-        entityManager.persist(toDbEntity(order));
+        com.svichkarev.anatoly.db.EOrder dbOrder = toDbEntity(order);
+        entityManager.persist(dbOrder);
+        entityManager.flush();
+        System.out.println(dbOrder.getId());
     }
 
     private EOrder getOrder(Message message) {
