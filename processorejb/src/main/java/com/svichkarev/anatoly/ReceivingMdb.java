@@ -8,6 +8,10 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.ObjectMessage;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import static com.svichkarev.anatoly.db.EOrder.toDbEntity;
 
 @MessageDriven(activationConfig = {
         @ActivationConfigProperty(
@@ -17,17 +21,27 @@ import javax.jms.ObjectMessage;
 })
 public class ReceivingMdb implements MessageListener {
 
+    @PersistenceContext(unitName = "orderPU")
+    private EntityManager entityManager;
+
     @Override
     public void onMessage(Message message) {
+        EOrder order = getOrder(message);
+        System.out.println("onMessage(" + order + ")");
+
+        entityManager.persist(toDbEntity(order));
+    }
+
+    private EOrder getOrder(Message message) {
         if (message instanceof ObjectMessage) {
             ObjectMessage objectMessage = (ObjectMessage) message;
 
             try {
-                EOrder order = objectMessage.getBody(EOrder.class);
-                System.out.println(order);
+                return objectMessage.getBody(EOrder.class);
             } catch (JMSException e) {
                 e.printStackTrace();
             }
         }
+        return null;
     }
 }

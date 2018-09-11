@@ -15,8 +15,6 @@ import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.svichkarev.anatoly.db.EOrder.toDbEntity;
-
 @Stateless
 public class OrderServiceBean implements OrderService {
 
@@ -33,7 +31,6 @@ public class OrderServiceBean implements OrderService {
     public void addOrder(EOrder order) {
         System.out.println("addOrder(" + order + ")");
         sendToProcessorEjb(order);
-        entityManager.persist(toDbEntity(order));
     }
 
     @Override
